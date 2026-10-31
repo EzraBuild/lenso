@@ -121,3 +121,83 @@ body {
   margin-left: 1px;
   animation: blink 1s steps(1) infinite;
 }
+
+/* container rails: the two vertical lines framing the page */
+.rails {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 100%;
+  max-width: 72rem;
+  transform: translateX(-50%);
+  border-left: 1px solid var(--line);
+  border-right: 1px solid var(--line);
+  pointer-events: none;
+  z-index: 0;
+}
+@media (max-width: 80rem) {
+  .rails {
+    display: none;
+  }
+}
+
+/* vertical side labels in the hero */
+.vtext {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+/* dashed signal flowing along a connector */
+@keyframes flow-x {
+  to {
+    background-position: 24px 0;
+  }
+}
+@keyframes flow-y {
+  to {
+    background-position: 0 24px;
+  }
+}
+.flow-x {
+  height: 1px;
+  background: repeating-linear-gradient(90deg, var(--fg) 0 6px, transparent 6px 12px);
+  background-size: 24px 1px;
+  opacity: 0.45;
+  animation: flow-x 0.9s linear infinite;
+}
+.flow-y {
+  width: 1px;
+  background: repeating-linear-gradient(180deg, var(--fg) 0 6px, transparent 6px 12px);
+  background-size: 1px 24px;
+  opacity: 0.45;
+  animation: flow-y 0.9s linear infinite;
+}
+
+/* live dot on the phone */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+.live-dot {
+  animation: pulse-dot 1.2s ease-in-out infinite;
+}
+
+/* marquee strip */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee {
+  animation: marquee 36s linear infinite;
+}
+.marquee-host:hover .marquee {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flow-x, .flow-y, .live-dot, .marquee {
+    animation: none;
+  }
+}
