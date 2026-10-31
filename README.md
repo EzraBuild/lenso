@@ -83,8 +83,9 @@ settings and log under `%LOCALAPPDATA%\Lenso`.
 
 ## Website
 
-`site/` is the Next.js landing page (lenso.dev style guide: Geist, Geist Mono, Source Serif 4,
-black, square corners). `cd site && npm run dev`. The download button points at the latest
+`site/` is the Next.js landing page, live at <https://lenso-steel.vercel.app> (Vercel project
+`lenso`; `cd site && vercel --prod` redeploys). Geist, Geist Mono, Source Serif 4, black, square
+corners. `cd site && npm run dev` runs it locally. The download button points at the latest
 GitHub release.
 
 ## Scripting

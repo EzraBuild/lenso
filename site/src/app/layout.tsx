@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title: "Lenso — your iPhone is your webcam",
   description:
     "Use an iPhone as a Windows webcam over Wi-Fi. Hardware H.264, no OBS, no watermark, no subscription, no Mac. Open source.",
-  metadataBase: new URL("https://lenso.dev"),
+  metadataBase: new URL("https://lenso-steel.vercel.app"),
   openGraph: {
     title: "Lenso — your iPhone is your webcam",
     description: "Use an iPhone as a Windows webcam over Wi-Fi. No OBS, no watermark, no subscription.",
