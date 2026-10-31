@@ -4,6 +4,7 @@ import argparse
 import asyncio
 import json
 import logging
+import os
 import pathlib
 import ssl
 import sys
@@ -18,10 +19,14 @@ from certs import ensure_certs, lan_ips  # noqa: E402
 from picture import Picture, thumbnail, to_png  # noqa: E402
 from vcam import VirtualCamera  # noqa: E402
 
-ROOT = pathlib.Path(__file__).resolve().parent.parent
+# Source checkout: everything lives in the repo folder. Installed build (PyInstaller):
+# the exe sits in resources/receiver, web/ next to it, and writable data goes to %LOCALAPPDATA%\Lenso.
+FROZEN = bool(getattr(sys, "frozen", False))
+ROOT = pathlib.Path(sys.executable).resolve().parent if FROZEN else pathlib.Path(__file__).resolve().parent.parent
 WEB_DIR = ROOT / "web"
-CERT_DIR = ROOT / "certs"
-SETTINGS_FILE = ROOT / "settings.json"
+DATA_DIR = pathlib.Path(os.environ.get("LOCALAPPDATA", str(ROOT))) / "Lenso" if FROZEN else ROOT
+CERT_DIR = DATA_DIR / "certs"
+SETTINGS_FILE = DATA_DIR / "settings.json"
 
 log = logging.getLogger("lenso")
 
@@ -338,7 +343,7 @@ async def amain(args):
         vcam.standby()
     except Exception as exc:  # noqa: BLE001
         log.error("virtual camera '%s' not available: %s", args.device, exc)
-        log.error("run install-camera.cmd once (needs admin) and restart. "
+        log.error("Reinstall Lenso (or run install-camera.cmd once as admin) and restart. "
                   "Running anyway so you can do the phone setup; frames are received but not shown.")
         vcam = NullCamera()
     state = State(vcam, Picture(SETTINGS_FILE))
@@ -380,9 +385,12 @@ def main():
     p.add_argument("--device", default="lenso", help="virtual camera name registered by install-camera.cmd")
     p.add_argument("-v", "--verbose", action="store_true")
     args = p.parse_args()
-    sys.stdout.reconfigure(line_buffering=True)  # banner shows up even when output is piped
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    if sys.stdout is not None:
+        sys.stdout.reconfigure(line_buffering=True)  # banner shows up even when output is piped
+    log_kwargs = {"filename": str(DATA_DIR / "receiver.log")} if FROZEN or sys.stdout is None else {}
     logging.basicConfig(level=logging.DEBUG if args.verbose else logging.INFO,
-                        format="%(asctime)s %(name)s %(levelname)s %(message)s", datefmt="%H:%M:%S")
+                        format="%(asctime)s %(name)s %(levelname)s %(message)s", datefmt="%H:%M:%S", **log_kwargs)
     logging.getLogger("aioice").setLevel(logging.WARNING)
     logging.getLogger("aiohttp.access").setLevel(logging.WARNING)
     try:

@@ -23,14 +23,25 @@ async function alive(timeoutMs = 800): Promise<boolean> {
   }
 }
 
-function startReceiver(): boolean {
+function receiverCommand(): { exe: string; args: string[]; cwd: string } | null {
+  if (app.isPackaged) {
+    // installed build: PyInstaller bundle shipped in resources/receiver
+    const exe = join(process.resourcesPath, 'receiver', 'lenso-receiver.exe')
+    return existsSync(exe) ? { exe, args: [], cwd: join(process.resourcesPath, 'receiver') } : null
+  }
   const pyw = join(ROOT, '.venv', 'Scripts', 'pythonw.exe')
   const py = join(ROOT, '.venv', 'Scripts', 'python.exe')
   const exe = existsSync(pyw) ? pyw : py
-  if (!existsSync(exe)) return false
-  const log = openSync(join(ROOT, 'receiver.log'), 'a')
-  const child = spawn(exe, [join(ROOT, 'server', 'main.py')], {
-    cwd: ROOT,
+  return existsSync(exe) ? { exe, args: [join(ROOT, 'server', 'main.py')], cwd: ROOT } : null
+}
+
+function startReceiver(): boolean {
+  const rc = receiverCommand()
+  if (!rc) return false
+  const logDir = app.isPackaged ? app.getPath('userData') : ROOT
+  const log = openSync(join(logDir, 'receiver.log'), 'a')
+  const child = spawn(rc.exe, rc.args, {
+    cwd: rc.cwd,
     detached: true,
     stdio: ['ignore', log, log],
     windowsHide: true

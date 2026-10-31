@@ -8,7 +8,8 @@
     "dev": "electron-vite dev",
     "build": "electron-vite build",
     "start": "electron-vite preview",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "dist": "electron-vite build && electron-builder --win --publish never"
   },
   "dependencies": {
     "@radix-ui/react-slider": "latest",
@@ -27,9 +28,12 @@
     "@types/react-dom": "latest",
     "@vitejs/plugin-react": "latest",
     "electron": "latest",
+    "electron-builder": "^26.18.0",
     "electron-vite": "latest",
     "tailwindcss": "latest",
     "typescript": "latest",
     "vite": "latest"
-  }
+  },
+  "author": "Ezra",
+  "homepage": "https://github.com/EzraBuild/lenso"
 }
