@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { DOWNLOAD, REPO } from "@/lib/release";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 function GitHubIcon() {
   return (
@@ -12,23 +13,21 @@ function GitHubIcon() {
 
 export function Nav() {
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-black/80 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-line bg-bg/80 backdrop-blur">
       <div className="mx-auto flex h-11 max-w-6xl items-center justify-between px-5">
         <Link href="/" className="flex items-center gap-2.5 font-mono text-[12px] font-medium tracking-[0.14em] uppercase">
-          <Image src="/icon.png" alt="" width={18} height={18} priority />
+          <Image src="/icon.png" alt="" width={18} height={18} priority className="dark:invert-0 invert" />
           <span className="text-dim">|</span>
           Lenso.
         </Link>
-        <nav className="flex items-center gap-5 font-mono text-[11px] tracking-[0.12em] uppercase text-muted">
-          <a href="#how" className="hidden hover:text-foreground sm:inline">How it works</a>
-          <a href="#features" className="hidden hover:text-foreground sm:inline">Features</a>
-          <a href={REPO} className="hover:text-foreground" aria-label="GitHub" target="_blank" rel="noreferrer">
+        <nav className="flex items-center gap-4 font-mono text-[11px] tracking-[0.12em] uppercase text-muted">
+          <a href="#how" className="hidden hover:text-fg sm:inline">How it works</a>
+          <a href="#features" className="hidden hover:text-fg sm:inline">Features</a>
+          <a href={REPO} className="hover:text-fg" aria-label="GitHub" target="_blank" rel="noreferrer">
             <GitHubIcon />
           </a>
-          <a
-            href={DOWNLOAD}
-            className="border border-foreground bg-foreground px-3 py-1.5 text-black transition-colors hover:bg-zinc-200"
-          >
+          <ThemeToggle />
+          <a href={DOWNLOAD} className="border border-fg bg-fg px-3 py-1.5 text-bg transition-opacity hover:opacity-85">
             Download
           </a>
         </nav>

@@ -2,8 +2,8 @@
 
 import { useEffect, useRef } from "react";
 
-/* Faint drifting telemetry labels behind the hero, drawn on a canvas:
-   the kind of numbers Lenso shows while streaming. */
+/* Faint drifting telemetry labels drawn on a canvas: the kind of numbers Lenso shows
+   while streaming. Colour follows the theme through --rain. */
 const WORDS = [
   "1920×1080", "30 fps", "8.0 Mbps", "h264", "hw-enc", "rtt 6ms", "webrtc", "wifi 5GHz",
   "tilt 90°", "auto-upright", "letterbox 16:9", "zoom 1.0x", "ultrawide", "torch off",
@@ -13,7 +13,7 @@ const WORDS = [
 
 type Label = { x: number; y: number; vx: number; vy: number; t: string; a: number; p: number };
 
-export function HeroCanvas() {
+export function Telemetry() {
   const ref = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -26,6 +26,11 @@ export function HeroCanvas() {
     let w = 0, h = 0, dpr = 1, raf = 0;
     // canvas cannot resolve CSS variables: read the real family name next/font generated
     const mono = (getComputedStyle(document.documentElement).getPropertyValue("--font-geist-mono").trim() || "ui-monospace") + ", ui-monospace, monospace";
+    let rgb = "250,250,250";
+    const readColour = () => { rgb = getComputedStyle(canvas).getPropertyValue("--rain").trim().replace(/\s+/g, "") || rgb; };
+    readColour();
+    const mo = new MutationObserver(readColour);
+    mo.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
     let labels: Label[] = [];
 
     const seed = () => {
@@ -72,7 +77,7 @@ export function HeroCanvas() {
         const d = Math.hypot((l.x - cx) / (w * 0.32), (l.y - cy) / (h * 0.32));
         const keepOut = Math.min(1, Math.max(0, (d - 0.55) / 0.5));
         const flicker = reduce ? 1 : 0.75 + 0.25 * Math.sin(l.p);
-        ctx.fillStyle = `rgba(250,250,250,${(l.a * keepOut * flicker).toFixed(3)})`;
+        ctx.fillStyle = `rgba(${rgb},${(l.a * keepOut * flicker).toFixed(3)})`;
         ctx.fillText(l.t, l.x, l.y);
         ctx.fillRect(l.x - 7, l.y - 1, 2, 2);
       }
@@ -86,6 +91,7 @@ export function HeroCanvas() {
     return () => {
       cancelAnimationFrame(raf);
       ro.disconnect();
+      mo.disconnect();
     };
   }, []);
 
