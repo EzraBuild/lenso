@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: #000000;
+  --color-foreground: #fafafa;
+  --color-card: #0a0a0a;
+  --color-card-2: #111111;
+  --color-border: #262626;
+  --color-border-2: #333333;
+  --color-muted: #a1a1aa;
+  --color-dim: #71717a;
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-serif: var(--font-source-serif), Georgia, serif;
+  --font-body-serif: var(--font-garamond), Georgia, serif;
+  --radius: 0px;
+}
+
+* {
+  border-radius: 0 !important;
+  border-color: var(--color-border);
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  letter-spacing: -0.01em;
+}
+::selection {
+  background: #fafafa;
+  color: #000;
+}
+
+/* faint 60px grid, fading out radially, same trick as the reference */
+.grid-bg {
+  background-image: linear-gradient(to right, #fafafa 1px, transparent 1px), linear-gradient(#fafafa 1px, transparent 1px);
+  background-size: 60px 60px;
+  opacity: 0.04;
+  -webkit-mask-image: radial-gradient(70% 60% at 50% 40%, #000 20%, transparent 100%);
+  mask-image: radial-gradient(70% 60% at 50% 40%, #000 20%, transparent 100%);
+}
+.fade-top {
+  background: linear-gradient(#000 0%, transparent 100%);
+}
+.fade-bottom {
+  background: linear-gradient(transparent 0%, #000 100%);
+}
