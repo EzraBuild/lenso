@@ -7,6 +7,7 @@ import { Switch } from '@/components/ui/switch'
 import { Slider } from '@/components/ui/slider'
 import { cmd, picture, usePreview, useStatus, type Picture } from '@/lib/api'
 import { cn } from '@/lib/utils'
+import logo from '@/assets/icon.png'
 
 const CAMERAS = [
   { label: 'Front', value: 'front' },
@@ -106,7 +107,7 @@ export default function App(): React.JSX.Element {
       {/* title bar (draggable; native window buttons overlay the right end) */}
       <header className="drag flex h-10 shrink-0 items-center justify-between border-b border-border bg-black/80 pr-[150px] pl-5 backdrop-blur">
         <div className="flex items-center gap-2.5 text-[13px] font-semibold tracking-tight">
-          <span className="inline-block h-2 w-2 bg-foreground" />
+          <img src={logo} alt="" className="h-5 w-5" />
           Lenso
         </div>
         <div className="no-drag flex items-center gap-2 border border-border bg-card px-2.5 py-1 font-mono text-[11px] text-muted">

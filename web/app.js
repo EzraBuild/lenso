@@ -121,7 +121,7 @@
     p.encodings[0].maxBitrate = Number(cfg.bitrate) * 1_000_000;
     p.encodings[0].maxFramerate = Number(cfg.fps);
     p.encodings[0].scaleResolutionDownBy = 1;
-    p.degradationPreference = "maintain-resolution";
+    p.degradationPreference = "maintain-framerate";   // smooth motion first; Safari lowers resolution if the link is weak
     try { await sender.setParameters(p); } catch (e) { console.warn("setParameters", e); }
   }
 

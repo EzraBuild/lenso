@@ -14,4 +14,4 @@ if not exist out\main\index.js (
     echo Building the control app, one time...
     call npm run build || (pause & exit /b 1)
 )
-start "" /b npx --no-install electron .
+start "" "node_modules\electron\dist\electron.exe" .

@@ -69,7 +69,7 @@ function createWindow(): BrowserWindow {
     title: 'Lenso',
     titleBarStyle: 'hidden',
     titleBarOverlay: { color: '#000000', symbolColor: '#fafafa', height: 40 },
-    icon: join(__dirname, '../../resources/icon.png'),
+    icon: join(__dirname, '../../resources/icon.ico'),
     webPreferences: { preload: join(__dirname, '../preload/index.js'), sandbox: false }
   })
   win.on('ready-to-show', () => win.show())
