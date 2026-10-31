@@ -1,0 +1,5 @@
+aiohttp>=3.9
+aiortc>=1.9
+pyvirtualcam>=0.11
+cryptography>=42
+numpy>=1.26
