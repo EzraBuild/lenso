@@ -12,7 +12,13 @@ Use an iPhone as a webcam on Windows 11. No OBS, no watermark, no paid app, no M
   that Zoom, Teams, Discord, Chrome and OBS all see.
 - Both devices just need to be on the same Wi-Fi. No hotspot, no internet needed.
 
-## One-time setup (PC)
+## Install (the easy way)
+
+Download **Lenso-Setup-x.y.z.exe** from the [latest release](https://github.com/EzraBuild/lenso/releases/latest)
+and run it. It installs the control app, bundles the receiver, and registers the "lenso" virtual
+webcam. Then skip to *One-time setup (iPhone)*.
+
+## One-time setup (PC, from source)
 
 1. `setup.cmd`  creates the Python environment.
 2. `install-camera.cmd`  registers the "lenso" virtual webcam (asks for admin once).
@@ -60,6 +66,27 @@ stay upright automatically no matter how you hold the phone (see Rotate below).
 `run.cmd` still starts the receiver alone (no window) if you only want the scripting API.
 Developing the app: `cd app && npm run dev` gives hot reload.
 
+## Building the installer
+
+```
+.venv\Scripts\python.exe -m PyInstaller --noconfirm --onedir --noconsole --name lenso-receiver ^
+  --distpath buildeceiver-dist --workpath build\pyi --specpath build ^
+  --collect-all aiortc --collect-all aioice --collect-all av --collect-all pyvirtualcam ^
+  --collect-all pylibsrtp --collect-all cryptography --collect-all aiohttp ^
+  --hidden-import certs --hidden-import picture --hidden-import vcam --paths server server\main.py
+cd app && npm run dist
+```
+
+Produces `build/installer/Lenso-Setup-<version>.exe` (NSIS, per-machine; registers the webcam
+filter during install and removes it on uninstall). The installed receiver keeps its certificate,
+settings and log under `%LOCALAPPDATA%\Lenso`.
+
+## Website
+
+`site/` is the Next.js landing page (lenso.dev style guide: Geist, Geist Mono, Source Serif 4,
+black, square corners). `cd site && npm run dev`. The download button points at the latest
+GitHub release.
+
 ## Scripting
 
 Everything in the UI is reachable from the PC while the phone app is open:
@@ -95,7 +122,8 @@ receiver and prints the frame rate it decoded. The phone page is also served at
 ## Layout
 
 ```
-app/                the control app (Electron + React + TypeScript + Tailwind)
+app/                the control app (Electron + React + TypeScript + Tailwind); electron-builder.yml packages it
+site/               the website (Next.js)
   src/main/         Electron main process: window, starts/stops the Python receiver
   src/renderer/     the UI (App.tsx, shadcn-style components in components/ui)
 server/main.py      HTTPS + WebRTC receiver + control API
