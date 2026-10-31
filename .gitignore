@@ -1,0 +1,9 @@
+.venv/
+certs/
+__pycache__/
+vendor/unitycapture/src.zip
+vendor/unitycapture/UnityCapture-master/
+settings.json
+receiver.log
+app/node_modules/
+app/out/
