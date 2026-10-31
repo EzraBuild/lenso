@@ -1,0 +1,75 @@
+@import 'tailwindcss';
+
+@font-face {
+  font-family: 'Geist';
+  src: url('./assets/fonts/Geist.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('./assets/fonts/GeistMono.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@theme {
+  --font-sans: 'Geist', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'Geist Mono', Consolas, monospace;
+  --radius: 0px;
+  --color-background: #000000;
+  --color-foreground: #fafafa;
+  --color-card: #0a0a0a;
+  --color-card-2: #111111;
+  --color-border: #262626;
+  --color-border-2: #333333;
+  --color-muted: #a1a1aa;
+  --color-dim: #71717a;
+  --color-ok: #22c55e;
+  --color-warn: #eab308;
+  --color-err: #ef4444;
+}
+
+* {
+  border-radius: 0 !important;
+  border-color: var(--color-border);
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+body {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  letter-spacing: -0.01em;
+  background-color: var(--color-background);
+  background-image: linear-gradient(var(--color-border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-border) 1px, transparent 1px);
+  background-size: 48px 48px;
+  background-position: -1px -1px;
+  overflow: hidden;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 0%, transparent 25%, rgba(0, 0, 0, 0.88) 80%);
+}
+
+.drag {
+  -webkit-app-region: drag;
+}
+.no-drag {
+  -webkit-app-region: no-drag;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #262626;
+}
