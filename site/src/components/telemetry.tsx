@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 
 /* Faint drifting telemetry labels drawn on a canvas: the kind of numbers Lenso shows
-   while streaming. Colour follows the theme through --rain. */
+   while streaming. Colour follows the theme through --fx. */
 const WORDS = [
   "1920×1080", "30 fps", "8.0 Mbps", "h264", "hw-enc", "rtt 6ms", "webrtc", "wifi 5GHz",
   "tilt 90°", "auto-upright", "letterbox 16:9", "zoom 1.0x", "ultrawide", "torch off",
@@ -27,7 +27,7 @@ export function Telemetry() {
     // canvas cannot resolve CSS variables: read the real family name next/font generated
     const mono = (getComputedStyle(document.documentElement).getPropertyValue("--font-geist-mono").trim() || "ui-monospace") + ", ui-monospace, monospace";
     let rgb = "250,250,250";
-    const readColour = () => { rgb = getComputedStyle(canvas).getPropertyValue("--rain").trim().replace(/\s+/g, "") || rgb; };
+    const readColour = () => { rgb = getComputedStyle(canvas).getPropertyValue("--fx").trim().replace(/\s+/g, "") || rgb; };
     readColour();
     const mo = new MutationObserver(readColour);
     mo.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });

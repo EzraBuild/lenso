@@ -1,5 +1,5 @@
 import { Nav } from "@/components/Nav";
-import { PixelRain } from "@/components/pixel-rain";
+import { Sensor } from "@/components/sensor";
 import { Reveal } from "@/components/reveal";
 import { Telemetry } from "@/components/telemetry";
 import { Ticker } from "@/components/ticker";
@@ -60,7 +60,7 @@ export default function Home() {
         {/* ---------------------------------------------------------------- hero */}
         <section className="relative overflow-hidden border-b border-line">
           <div className="grid-bg pointer-events-none absolute inset-0" />
-          <PixelRain className="absolute inset-x-0 top-0 h-full w-full [mask-image:linear-gradient(to_bottom,black_40%,transparent)]" />
+          <Sensor className="absolute inset-0 h-full w-full [mask-image:linear-gradient(to_bottom,black_55%,transparent)]" />
           <div className="fade-top pointer-events-none absolute inset-x-0 top-0 h-16" />
           <div className="fade-bottom pointer-events-none absolute inset-x-0 bottom-0 h-28" />
 
@@ -159,7 +159,7 @@ export default function Home() {
         {/* ---------------------------------------------------------------- download */}
         <section id="download" className="relative overflow-hidden border-t border-line">
           <Telemetry />
-          <PixelRain density={0.6} className="absolute inset-0 h-full w-full [mask-image:linear-gradient(to_bottom,transparent,black_30%,black_70%,transparent)]" />
+          <Sensor density={0.7} focus={false} className="absolute inset-0 h-full w-full [mask-image:linear-gradient(to_bottom,transparent,black_30%,black_70%,transparent)]" />
           <div className="relative mx-auto grid max-w-6xl gap-10 px-5 py-20 lg:grid-cols-[1.2fr_1fr] lg:items-center">
             <Reveal>
               <h2 className="font-serif text-4xl tracking-[-0.02em] sm:text-5xl">Get Lenso</h2>
