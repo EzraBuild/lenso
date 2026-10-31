@@ -1,0 +1,10 @@
+{
+  "name": "Lenso",
+  "short_name": "Lenso",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0e0e11",
+  "theme_color": "#0e0e11",
+  "icons": [{ "src": "/icon.png", "sizes": "180x180", "type": "image/png" }]
+}
